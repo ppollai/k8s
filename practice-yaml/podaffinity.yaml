@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ussdapp1
+  labels:
+    env: dev
+    tier: frontend
+spec:
+  replicas: 5
+  selector:
+     matchLabels:
+        tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx1
+        image: nginx
+        ports:
+        - containerPort: 80
+      - name: tomcat1
+        image: tomcat
+        ports:
+        - containerPort: 8080
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: env
+                operator: In
+                values:
+                - dev
+            topologyKey: kubernetes.io/hostname

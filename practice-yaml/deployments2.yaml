@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ussddb1
+  labels:
+    env: dev
+    tier: backend
+spec:
+  replicas: 5
+  selector:
+     matchLabels:
+        tier: backend
+  template:
+    metadata:
+      labels:
+        tier: backend
+    spec:
+      containers:
+      - name: nginx1
+        image: nginx
+        ports:
+        - containerPort: 80
+      - name: tomcat1
+        image: tomcat
+        ports:
+        - containerPort: 8080
