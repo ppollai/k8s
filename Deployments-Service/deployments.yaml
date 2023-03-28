@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ussdapp1
+spec:
+  replicas: 2
+  selector:
+     matchLabels:
+        tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx1
+        image: nginx
+        ports:
+        - containerPort: 80
+      - name: tomcat1
+        image: tomcat
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ussddb1
+spec:
+  replicas: 2
+  selector:
+     matchLabels:
+        tier: backend
+  template:
+    metadata:
+      labels:
+        tier: backend
+    spec:
+      containers:
+      - name: nginx1
+        image: nginx
+        ports:
+        - containerPort: 80
+      - name: tomcat1
+        image: tomcat
+        ports:
+        - containerPort: 8080
